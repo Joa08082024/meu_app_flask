@@ -1,12 +1,16 @@
 from flask import Flask
-import os
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/")
 def home():
     return "API Flask no ar! 🚀"
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+@app.route("/status")
+def status():
+    return {"status": "ok", "message": "Servidor funcionando corretamente!"}
+
+# NÃO inclua app.run() no deploy Render
+# Gunicorn irá iniciar o app automaticamente
